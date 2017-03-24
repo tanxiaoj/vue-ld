@@ -7,6 +7,7 @@ import VueResource from 'vue-resource'
 import routerConfig from './router.js'
 import store from './store/store.js'
 import Mint from 'mint-ui';
+import 'mint-ui/lib/style.css'
 import 'common/stylus/index.styl'
 
 Vue.use(VueRouter)

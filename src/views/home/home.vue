@@ -1,13 +1,13 @@
 <template>
-	<div class="home" @click="act">
+	<div class="home">
 		<slide></slide>
 	    <div class="nav border-1px">
 		    <ul class="content">
 		        <li class="nav-item">
-		        	<router-link to="/team">球队</router-link>
+		        	<router-link to="/teamList">球队</router-link>
 		      	</li>
 		      	<li class="nav-item">
-		        	<router-link to="/race">赛事</router-link>
+		        	<router-link to="/raceList">赛事</router-link>
 		      	</li>
 		      	<li class="nav-item">
 		        	<router-link to="/video">视频</router-link>
@@ -32,9 +32,6 @@
 			}
 		},
 		methods : {
-			act : function(){
-				console.log(this.userId)
-			}
 		},
 		components: {
 			slide
@@ -42,11 +39,12 @@
 	}
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus" scope>
+<style lang="stylus" rel="stylesheet/stylus" scoped>
 	.home
 		.nav
 			width:100%
 			height: 80px
+			font-size: 15px
 			background:#f7f7f7
 			box-shadow:0px 5px 20px 0px rgba(0,0,0,0.1)
 		    .content

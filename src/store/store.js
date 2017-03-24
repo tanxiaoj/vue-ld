@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const state = {
-	api : "http://api.51ledong.com:8081",
+	api : "http://api.51ledong.com:8081/ledong-p2c-webapps-wwwp",
 	// api : "http://115.182.45.39:8080",
 	userId : "111",
 	// teamlist : {}

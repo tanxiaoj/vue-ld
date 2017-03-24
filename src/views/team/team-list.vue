@@ -12,12 +12,20 @@
         </div>
 
         <div id="content">      
-	        <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" ref="loadmore">
+	        <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" @top-status-change="handleTopChange" @bottom-status-change="handleBottomChange" ref="loadmore">
 	            <ul class="teamList" id="add">
 		            <template v-for="list in lists">
 		                <li><a href="javascript:;"><img :src="list.teamLogoUrl"><span>{{list.teamFullname}}</span><i>{{list.playerCount}}人</i></a></li>
 		            </template>
 	            </ul>
+			    <div slot="top" class="mint-loadmore-top">
+				    <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
+				    <span v-show="topStatus === 'loading'">Loading...</span>
+			    </div>	      
+			    <div slot="bottom" class="mint-loadmore-bottom">
+				    <span v-show="bottomStatus !== 'loading'" :class="{ 'rotate': bottomStatus === 'drop' }">↑</span>
+				    <span v-show="bottomStatus === 'loading'">Loading...</span>
+			    </div>	  
 	        </mt-loadmore>
         </div>  
 	</div>
@@ -33,7 +41,9 @@
 			return {
 				lists : [],
 				page : 0,
-				pageSize : 7
+				pageSize : 9,
+				topStatus : "",
+				bottomStatus : ""
 			}
 		},
 		created(){
@@ -42,15 +52,20 @@
 		methods : {
 			loadBottom() {
 			  // ...// load more data
+			  this.load();
 			  this.allLoaded = true;// if all data are loaded
 			  this.$refs.loadmore.onBottomLoaded();
 			},
 			loadTop() {
-				console.log(1)
 			  // ...// 加载更多数据
-			  this.load();
 			  this.$refs.loadmore.onTopLoaded();
 			},
+		    handleTopChange(status) {
+		       this.topStatus = status;
+		    },
+		    handleBottomChange(status) {
+		    	this.bottomStatus = status;
+		    },
 			load() {
 				var _this = this ;
 
@@ -74,15 +89,19 @@
 
 				var xhr = new XMLHttpRequest();  
 				   
-				xhr.open("POST", this.$store.state.api+"/ledong-p2c-webapps-wwwp/team/getAllTeam", false);  
+				xhr.open("POST", this.$store.state.api+"/team/getAllTeam", false);  
 				xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");  
 				xhr.onreadystatechange = function(){  
 				    var XMLHttpReq = xhr;  
 				    if (XMLHttpReq.readyState == 4) {  
 				        if (XMLHttpReq.status == 200) {  
 				            var res = JSON.parse(XMLHttpReq.responseText);  
-
+				            console.log(res)
 				             
+				            if(res.retMessage == "emptydatas"){
+				            	return ;
+				            }
+
 				            for(var i=0;i<res.retContent.length;i++){
 				            	_this.lists.push(res.retContent[i])
 				            }
@@ -102,7 +121,11 @@
 	}
 </script>
 
-<style scope>
+<style scoped>
+.mint-loadmore{
+	color: #333;
+	font-size: 15px;
+}
 .title {
     height: 0.392rem;
     line-height: 0.392rem;
