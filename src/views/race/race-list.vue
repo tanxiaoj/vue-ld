@@ -1,21 +1,35 @@
 <template>
 	<div class="race-list">
 		<headTop :head-name="headName"></headTop>
-		<template v-for="list in lists">
-			<race :list="list"></race>
-		</template>
+
+	    <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" @top-status-change="handleTopChange" @bottom-status-change="handleBottomChange" ref="loadmore">
+			<template v-for="list in lists">
+				<race :list="list"></race>
+			</template>
+		    <div slot="top" class="mint-loadmore-top">
+			    <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
+			    <span v-show="topStatus === 'loading'">Loading...</span>
+		    </div>	      
+		    <div slot="bottom" class="mint-loadmore-bottom">
+			    <span v-show="bottomStatus !== 'loading'" :class="{ 'rotate': bottomStatus === 'drop' }">↑</span>
+			    <span v-show="bottomStatus === 'loading'">Loading...</span>
+		    </div>	  
+        </mt-loadmore>
+
 	</div>
 </template>
 
 <script>
+	import { mapMutations ,mapGetters} from 'vuex'
+	import * as type from '../../store/mutation-types.js'
 	import race from '../../components/race.vue'
 	import headTop from '../../components/head.vue'
+	import { Loadmore } from 'mint-ui'
 	export default {
 		name : "raceList",
 		data (){
 			return {
 				headName : "合作赛事",
-				lists : [],
 				page : 0,
 				pageSize : 9,
 				topStatus : "",
@@ -25,6 +39,9 @@
 		created(){
 			this.load();
 		},
+		computed : mapGetters({
+			lists : "raceList"
+		}),
 		methods : {
 			loadBottom() {
 			  // ...// load more data
@@ -42,6 +59,9 @@
 		    handleBottomChange(status) {
 		    	this.bottomStatus = status;
 		    },
+		    ...mapMutations ([
+		    	[type.GET_RACE_LIST]
+		    ]),
 			load() {
 				var _this = this ;
 
@@ -52,52 +72,22 @@
 					"pageSize": _this.pageSize,
 					"cityCode":""
 				}; 
+
+				this.$store.commit('GET_RACE_LIST',postData)
 				   
-				postData = (function(obj){ // 转成post需要的字符串.  
-				    var str = "";  
-				   
-				    for(var prop in obj){  
-				        str += prop + "=" + obj[prop] + "&"  
-				    }  
-				    return str;  
-
-				})(postData);  
-
-				var xhr = new XMLHttpRequest();  
-				   
-				xhr.open("POST", this.$store.state.api+"/match/getMatchListForCustomer", false);  
-				xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");  
-				xhr.onreadystatechange = function(){  
-				    var XMLHttpReq = xhr;  
-				    if (XMLHttpReq.readyState == 4) {  
-				        if (XMLHttpReq.status == 200) {  
-				            var res = JSON.parse(XMLHttpReq.responseText);  
-				            console.log(res)
-				             
-				            if(res.retMessage == "emptydatas"){
-				            	return ;
-				            }
-
-				            for(var i=0;i<res.retContent.length;i++){
-				            	_this.lists.push(res.retContent[i])
-				            }
-
-				            console.log(_this.lists)
-				            // console.log(state.teamlist)
-
-				        }  
-				    }  
-				};  
-				xhr.send(postData);  
 			}
 		},
 		components : {
 			race,
-			headTop
+			headTop ,
+			"mt-loadmore" :Loadmore
 		}
 	}
 </script>
 
 <style scoped>
-	
+.mint-loadmore{
+	color: #333;
+	font-size: 15px;
+}
 </style>

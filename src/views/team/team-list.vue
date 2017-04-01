@@ -32,24 +32,32 @@
 </template>
 
 <script>
-	import { mapState } from '../../store/store.js'
+	import { mapMutations } from 'vuex'
+	import * as type from '../../store/mutation-types.js'
 	import { Loadmore } from 'mint-ui'
 
 	export default {
 		name : 'teamList',
 		data(){
 			return {
-				lists : [],
 				page : 0,
-				pageSize : 9,
+				pageSize : 8,
 				topStatus : "",
 				bottomStatus : ""
 			}
 		},
-		created(){
+		mounted(){
 			this.load();
 		},
+		computed :{
+			lists () {
+				return this.$store.state.teamlist.teamList
+			}
+		},
 		methods : {
+			...mapMutations([
+				[type.GET_TEAM_LIST]
+			]),
 			loadBottom() {
 			  // ...// load more data
 			  this.load();
@@ -76,43 +84,7 @@
 					"pageSize": _this.pageSize,
 					"cityCode":""
 				}; 
-				   
-				postData = (function(obj){ // 转成post需要的字符串.  
-				    var str = "";  
-				   
-				    for(var prop in obj){  
-				        str += prop + "=" + obj[prop] + "&"  
-				    }  
-				    return str;  
-
-				})(postData);  
-
-				var xhr = new XMLHttpRequest();  
-				   
-				xhr.open("POST", this.$store.state.api+"/team/getAllTeam", false);  
-				xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");  
-				xhr.onreadystatechange = function(){  
-				    var XMLHttpReq = xhr;  
-				    if (XMLHttpReq.readyState == 4) {  
-				        if (XMLHttpReq.status == 200) {  
-				            var res = JSON.parse(XMLHttpReq.responseText);  
-				            console.log(res)
-				             
-				            if(res.retMessage == "emptydatas"){
-				            	return ;
-				            }
-
-				            for(var i=0;i<res.retContent.length;i++){
-				            	_this.lists.push(res.retContent[i])
-				            }
-
-				            console.log(_this.lists)
-				            // console.log(state.teamlist)
-
-				        }  
-				    }  
-				};  
-				xhr.send(postData);  
+				this.$store.commit('GET_TEAM_LIST', postData)
 			}
 		},
 		components : {

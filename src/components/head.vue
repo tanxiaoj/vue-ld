@@ -39,6 +39,7 @@
     overflow: hidden;
 }
 .title a {
+    position: absolute;
     width: 0.072rem;
     height: 0.12rem;
     background: url(ic_top_back.png) no-repeat;
