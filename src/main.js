@@ -3,15 +3,15 @@
 import Vue from 'vue'
 import App from './App'
 import VueRouter from 'vue-router'
-import VueResource from 'vue-resource'
 import routerConfig from './router.js'
 import store from './store/store.js'
+import 'assets/css/base.less'
 import Mint from 'mint-ui';
 import 'mint-ui/lib/style.css'
 import 'common/stylus/index.styl'
 
 Vue.use(VueRouter)
-Vue.use(VueResource)
+
 Vue.use(Mint);
 
 

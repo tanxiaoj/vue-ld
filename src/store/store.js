@@ -8,6 +8,7 @@ import adSwipe from './modules/adSwipe'
 import login from './modules/login'
 import loginout from './modules/loginout'
 import storeUser from './modules/storeUser'
+import activeUserlist from './modules/activeUserlist'
 
 
 Vue.use(Vuex);
@@ -23,7 +24,8 @@ export default new Vuex.Store({
 		adSwipe ,
 		login,
 		loginout ,
-		storeUser
+		storeUser ,
+		activeUserlist
 	},
 	strict: true,
 	strict: process.env.NODE_ENV !== 'production'

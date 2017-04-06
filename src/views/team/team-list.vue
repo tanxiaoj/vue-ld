@@ -1,12 +1,9 @@
 <template>
 	<div class="team-list">
-        <div class="title">
-            <a href="index.html"></a>
-            <a class="creatTeam" href="javascript:;">创建球队</a>
-        </div>   
-
+        <headTop :head-name="headName"></headTop>
+        <div class="creatTeam" href="javascript:;">创建球队</div>
         <div class="team-seach">
-            <a href="team-seach.html">
+            <a href="javascript:;">
                 <input type="text" placeholder="搜索球队">
             </a>
         </div>
@@ -35,11 +32,13 @@
 	import { mapMutations } from 'vuex'
 	import * as type from '../../store/mutation-types.js'
 	import { Loadmore } from 'mint-ui'
+    import headTop from '../../components/head.vue'
 
 	export default {
 		name : 'teamList',
 		data(){
 			return {
+                headName:"",
 				page : 0,
 				pageSize : 8,
 				topStatus : "",
@@ -88,7 +87,8 @@
 			}
 		},
 		components : {
-			"mt-loadmore" :Loadmore
+			"mt-loadmore" :Loadmore ,
+            headTop
 		}
 	}
 </script>
@@ -98,34 +98,14 @@
 	color: #333;
 	font-size: 15px;
 }
-.title {
-    height: 0.392rem;
-    line-height: 0.392rem;
-    font-size: 0.144rem;
-    color: #333;
-    border-bottom: 1px solid #dedede;
-    background-color: #fff;
-    position: relative;
-    text-align: center;
-    background-color: #e8ecf0;
-    overflow: hidden;
-}
-.title>a {
-    position: absolute;
-}
-.title>a:nth-child(1) {
-    width: 0.072rem;
-    height: 0.12rem;
-    /* background: url(../images/ic_top_back.png) no-repeat; */
-    -webkit-background-size: cover;
-    background-size: cover;
-    left: 0.12rem;
-    top: 0.128rem;
-}
-.title>a:nth-last-child(1) {
+
+.creatTeam {
     font-size: 0.128rem;
     color: #067bda;
     right: 0.12rem;
+    top: 0.128rem;
+    font-size: 15px;
+    position: absolute;
 }
 .team-seach {
     width: 100%;

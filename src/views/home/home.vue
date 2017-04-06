@@ -60,35 +60,40 @@
 	}
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+
+@import '../../assets/css/base.less';
+
 .nav{
 	width:100%;
 	height: 80px;
 	font-size: 15px;
 	background:#f7f7f7;
 	box-shadow:0px 5px 20px 0px rgba(0,0,0,0.1);
-}
-.nav .content{
+	.content{
 	    width: 355px;
 	    height: 80px;
 	    display:flex;	
 	    margin: 0 auto;
-}
-@media only screen and (max-width:320px) {
-	.nav .content{
-		width:302px;
+		.nav-item{
+		    width: 88px;
+		    height: 80px;
+		    flex:1;
+		    text-align: center;
+		}
+		.nav-item a{ 
+			display:block;
+			height:100%;
+		}
+	}
+	@media only screen and (max-width:320px) {
+		.content{
+			width:302px;
+		}
 	}
 }
-.nav-item{
-    width: 88px;
-    height: 80px;
-    flex:1;
-    text-align: center;
-}
-.nav-item a{ 
-	display:block;
-	height:100%;
-}
+
+
 .logBtn {
     position: absolute;
     right: 0.064rem;
@@ -96,8 +101,7 @@
     width: 0.2rem;
     height: 0.2rem;
     border-radius: 50%;
-    background: url(../.././assets/images/ic_user1@3x.png) no-repeat center center;
-    background-color: rgba(0,0,0,0.2);
+    background: url("@{images}ic_user1@3x.png") no-repeat center center;
     -webkit-background-size: 0.152rem 0.152rem;
     background-size: 0.152rem 0.152rem;
 }
