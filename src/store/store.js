@@ -9,6 +9,7 @@ import login from './modules/login'
 import loginout from './modules/loginout'
 import storeUser from './modules/storeUser'
 import activeUserlist from './modules/activeUserlist'
+import topiclist from './modules/topiclist'
 
 
 Vue.use(Vuex);
@@ -25,7 +26,8 @@ export default new Vuex.Store({
 		login,
 		loginout ,
 		storeUser ,
-		activeUserlist
+		activeUserlist ,
+		topiclist
 	},
 	strict: true,
 	strict: process.env.NODE_ENV !== 'production'

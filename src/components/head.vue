@@ -25,7 +25,9 @@
 
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+@import '../assets/css/base.less';
+
 .title {
     height: 0.392rem;
     line-height: 0.392rem;
@@ -42,7 +44,7 @@
     position: absolute;
     width: 0.072rem;
     height: 0.12rem;
-    background: url(ic_top_back.png) no-repeat;
+    background: url("@{images1}ic_top_back.png") no-repeat;
     -webkit-background-size: cover;
     background-size: cover;
     left: 0.12rem;

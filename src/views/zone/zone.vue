@@ -1,6 +1,6 @@
 <template>
 	<div class="zone">
-		<headTop></headTop>
+		<headTop :select-type="selectType" :desc="desc" @select="selectTab"></headTop>
 		<slide :ad-list="zoneAdLists" :swipe-data="swipeObj"></slide>
 		<!-- 活跃用户 -->
 		<div class="active_user">
@@ -17,14 +17,36 @@
 			</ul>
 			<div class="more"></div>
 		</div>
+		<div class="topic">
+	        <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" @top-status-change="handleTopChange" @bottom-status-change="handleBottomChange" ref="loadmore">
+				<ul v-for="data in topicLists">
+					<topic :topic-data="data"></topic>
+				</ul>
+			    <div slot="top" class="mint-loadmore-top">
+				    <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">刷新当前列表</span>
+				    <span v-show="topStatus === 'loading'">Loading...</span>
+			    </div>	      
+			    <div slot="bottom" class="mint-loadmore-bottom">
+				    <span v-show="bottomStatus !== 'loading'" :class="{ 'rotate': bottomStatus === 'drop' }">数据加载中...</span>
+				    <span v-show="bottomStatus === 'loading'">Loading...</span>
+			    </div>	 
+			</mt-loadmore>
+		</div>
 	</div>
 </template>
 
 <script>
 	import slide from '../../components/slide/slide.vue'
 	import headTop from '../../components/headZone.vue'
+	import topic from '../../components/topic.vue'
 	import { mapActions ,mapGetters} from 'vuex'
+	import { InfiniteScroll } from 'mint-ui'
 	import * as type from '../../store/mutation-types.js'
+	import { Loadmore,Lazyload } from 'mint-ui'
+
+    const INTRODUCE = 0;
+    const ATTEND = 1;
+
 	export default {
 		name :"zone",
 		data (){
@@ -33,6 +55,14 @@
 					speed : 3000,
 					h : 110
 				},
+				selectType :INTRODUCE,
+				desc :{
+					introduce : "推荐",
+					attend : "关注"
+				},
+				page : 0,
+				topStatus : "",
+				bottomStatus : "" ,
 				userId :this.$store.getters.loginMes.userData.userId
 			}
 		},
@@ -41,28 +71,65 @@
 		},
 		computed : mapGetters({
 			zoneAdLists : "zoneAdList",
-			activeLists : "activeList"
+			activeLists : "activeList",
+			topicLists : "topicList"
 		}),
 		methods :{
 			...mapActions([
 				["zoneAds"],
-				["activeList"]
+				["activeList"],
+				["getTopic"]
 			]),
+			loadBottom() {
+			  // ...// load more data
+			  this.load();
+			  this.allLoaded = true;// if all data are loaded
+			  this.$refs.loadmore.onBottomLoaded();
+			},
+			loadTop() {
+			  // ...// 加载更多数据
+			  this.$refs.loadmore.onTopLoaded();
+			},
+		    handleTopChange(status) {
+		       this.topStatus = status;
+		    },
+		    handleBottomChange(status) {
+		    	this.bottomStatus = status;
+		    },
 			load() {
+				var _this = this ;
+
+				_this.page ++ ;
+
 				this.$store.dispatch("zoneAds")
 				this.$store.dispatch("activeList",{
 					userId :this.userId
 				})
+				this.$store.dispatch("getTopic",{
+					page : _this.page,
+					pageSize:2 ,
+					userId :this.userId
+				})
+			},
+			selectTab(type){
+				this.selectType = type ;
 			}
 		},
 		components :{
 			slide,
-			headTop
+			headTop,
+			topic ,
+			Lazyload,
+			"mt-loadmore" :Loadmore ,
 		}
 	}
 </script>
 
 <style lang="less">
+	.mint-loadmore{
+		color: #333;
+		font-size: 15px;
+	}
 	.active_user{
 		background-color: #fff;
 		.title{

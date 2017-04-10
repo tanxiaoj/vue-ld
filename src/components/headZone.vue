@@ -4,8 +4,8 @@
             <i class="return" @click="history"></i>
             <i class="publish"></i>
             <ul class="tab">
-                <li class="active" @click="tabFn">推荐</li>
-                <li @click="tabFn">关注</li>
+                <li :class="{active :selectType==0}" @click="tabFn(0,$event)">{{desc.introduce}}</li>
+                <li :class="{active :selectType==1}" @click="tabFn(1,$event)">{{desc.attend}}</li>
             </ul>
         </div>
 	</div>
@@ -17,12 +17,37 @@
     
 	export default {
         name : "header",
+        data (){
+            return {
+                selectType : ""
+            }
+        },
+        props :{
+            // selectType :{
+            //     type :Number,
+            //     default :INTRODUCE
+            // },
+            desc :{
+                type :Object,
+                default() {
+                    return {
+                        introduce :"推荐",
+                        attend : "关注"
+                    }
+                }
+            }
+        },
         methods : {
             history (){
                 this.$router.go(-1);
             },
-            tabFn (){
-
+            tabFn (type,event){
+                // console.log(event)
+                // if(!event._constructed){
+                //     return ;
+                // }
+                this.selectType = type ;
+                this.$emit('select',type)
             }
         }
 	}

@@ -17,7 +17,7 @@
 		        	<router-link to="/zone">圈子</router-link>
 		      	</li>
 		    </ul>
-	    </ul>		
+	    </div>		
 	    <router-view></router-view>
 	</div>
 </template>
