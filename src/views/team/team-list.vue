@@ -29,7 +29,7 @@
 </template>
 
 <script>
-	import { mapMutations } from 'vuex'
+	import { mapActions } from 'vuex'
 	import * as type from '../../store/mutation-types.js'
 	import { Loadmore } from 'mint-ui'
     import headTop from '../../components/head.vue'
@@ -54,8 +54,8 @@
 			}
 		},
 		methods : {
-			...mapMutations([
-				[type.GET_TEAM_LIST]
+			...mapActions([
+				["getTeamlist"]
 			]),
 			loadBottom() {
 			  // ...// load more data
@@ -83,7 +83,7 @@
 					"pageSize": _this.pageSize,
 					"cityCode":""
 				}; 
-				this.$store.commit('GET_TEAM_LIST', postData)
+				this.$store.dispatch('getTeamlist', postData)
 			}
 		},
 		components : {

@@ -1,8 +1,7 @@
-import s from './base.js'
+import api from '../api.js'
 import * as type from '../mutation-types.js'
 
 const state = {
-	api : s.state.api,
 	raceList : []
 }
 
@@ -22,7 +21,7 @@ const mutations = {
 
 			var xhr = new XMLHttpRequest();  
 			   
-			xhr.open("POST", state.api+"/match/getMatchListForCustomer", false);  
+			xhr.open("POST", api.race_list, false);  
 			xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");  
 			xhr.onreadystatechange = function(){  
 			    var XMLHttpReq = xhr;  

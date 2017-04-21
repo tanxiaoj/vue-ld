@@ -1,8 +1,7 @@
-import s from './base.js'
+import api from '../api.js'
 import * as type from '../mutation-types.js'
 
 const state = {
-	api : s.state.api,
 	adList : [],
 	zoneAdList : []
 }
@@ -10,7 +9,7 @@ const state = {
 const mutations = {
 	[type.GET_AD_LIST](state) { 
 		var xhr = new XMLHttpRequest();  
-		xhr.open("POST", state.api+"/adManage/getADList", false);  
+		xhr.open("POST", api.adlist, false);  
 		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");  
 		xhr.onreadystatechange = function(){  
 		    var XMLHttpReq = xhr;  
@@ -35,7 +34,7 @@ const mutations = {
 	},
 	[type.GET_ZONEAD_LIST](state) { 
 		var xhr = new XMLHttpRequest();  
-		xhr.open("POST", state.api+"/adManage/getCircleADList", false);  
+		xhr.open("POST", api.adCircleList, false);  
 		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");  
 		xhr.onreadystatechange = function(){  
 		    var XMLHttpReq = xhr;  
