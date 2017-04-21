@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import actions from './actions.js'
 import videolist from './modules/videolist'
 import teamlist from './modules/teamlist'
 import racelist from './modules/racelist'
@@ -27,6 +28,7 @@ export default new Vuex.Store({
 		activeUserlist ,
 		topiclist
 	},
+	actions ,
 	strict: true,
 	strict: process.env.NODE_ENV !== 'production'
 });

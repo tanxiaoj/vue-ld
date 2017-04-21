@@ -55,7 +55,7 @@
 		},
 		methods : {
 			...mapActions([
-				["getTeamlist"]
+				["get_team_list"]
 			]),
 			loadBottom() {
 			  // ...// load more data
@@ -83,7 +83,7 @@
 					"pageSize": _this.pageSize,
 					"cityCode":""
 				}; 
-				this.$store.dispatch('getTeamlist', postData)
+				this.$store.dispatch('get_team_list', postData)
 			}
 		},
 		components : {
