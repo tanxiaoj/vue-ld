@@ -76,9 +76,9 @@
 		}),
 		methods :{
 			...mapActions([
-				["zoneAds"],
-				["activeList"],
-				["getTopic"]
+				["get_zoneAd_list"],
+				["active_user_list"],
+				["get_topic_list"]
 			]),
 			loadBottom() {
 			  // ...// load more data
@@ -101,11 +101,11 @@
 
 				_this.page ++ ;
 
-				this.$store.dispatch("zoneAds")
-				this.$store.dispatch("activeList",{
+				this.$store.dispatch("get_zoneAd_list")
+				this.$store.dispatch("active_user_list",{
 					userId :this.userId
 				})
-				this.$store.dispatch("getTopic",{
+				this.$store.dispatch("get_topic_list",{
 					page : _this.page,
 					pageSize:2 ,
 					userId :this.userId

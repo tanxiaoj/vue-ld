@@ -24,7 +24,7 @@
 
 <script>
 	import slide from '../../components/slide/slide.vue'
-	import { mapMutations ,mapGetters} from 'vuex'
+	import { mapActions ,mapGetters} from 'vuex'
 	import * as type from '../../store/mutation-types.js'
 	export default {
 		name : "home",
@@ -44,11 +44,11 @@
 			adLists : "adList"
 		}),
 		methods : {
-		    ...mapMutations ([
-		    	[type.GET_AD_LIST]
+		    ...mapActions ([
+		    	["get_ad_list"]
 		    ]),
 			load (){
-				this.$store.commit('GET_AD_LIST')
+				this.$store.dispatch('get_ad_list')
 			},
 			toLogin (){
 				this.$router.push('./myPage')

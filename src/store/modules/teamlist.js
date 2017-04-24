@@ -1,6 +1,4 @@
-import api from '../api.js'
 import * as type from '../mutation-types.js'
-import axios from 'axios'
 
 const state = {
 	teamList : []
@@ -14,8 +12,6 @@ const mutations = {
 		}
 	}
 }
-
-
 export default {
   state,
   mutations,

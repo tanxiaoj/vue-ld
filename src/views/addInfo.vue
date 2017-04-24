@@ -161,7 +161,7 @@
                 }
             },
             ...mapActions([
-                "storeUser",
+                "store_user",
                 "loginout"
             ]),
             storFn (){
@@ -172,7 +172,7 @@
                 });
 
                 MessageBox.confirm('确定保存当前数据?',"友情提示").then(action => {
-                    this.$store.dispatch('storeUser',{
+                    this.$store.dispatch('store_user',{
                         userId :this.$store.getters.loginMes.userData.userId,
                         headIcon : this.info.headIcon,
                         telphone : this.info.phoneNumber,

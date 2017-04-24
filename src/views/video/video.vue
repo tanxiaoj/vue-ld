@@ -7,7 +7,7 @@
 </template>
 
 <script>
-	import { mapMutations } from 'vuex'
+	import { mapActions } from 'vuex'
 	import * as type from '../../store/mutation-types.js'
 
 	export default {
@@ -26,11 +26,11 @@
 			}
 		},
 		methods : {
-			...mapMutations([
-				[type.GET_VIDEO_LIST]
+			...mapActions([
+				["get_video_list"]
 			]),
 			load () {
-				this.$store.commit('GET_VIDEO_LIST',{
+				this.$store.dispatch('get_video_list',{
 					page : 1,
 					pageSize : 9 ,
 					cityCode : ""

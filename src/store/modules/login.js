@@ -81,7 +81,7 @@ const getters = {
 	},
 	weight (state,getters){
 		if(getters.loginMes !='未登录'){
-			return (getters.loginMes.userData.weight)/1000
+			return (getters.loginMes.userData.weight)
 		}
 	},
 	pos (state,getters){

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-	import { mapMutations ,mapGetters} from 'vuex'
+	import { mapActions ,mapGetters} from 'vuex'
 	import * as type from '../../store/mutation-types.js'
 	import race from '../../components/race.vue'
 	import headTop from '../../components/head.vue'
@@ -59,8 +59,8 @@
 		    handleBottomChange(status) {
 		    	this.bottomStatus = status;
 		    },
-		    ...mapMutations ([
-		    	[type.GET_RACE_LIST]
+		    ...mapActions ([
+		    	["get_race_list"]
 		    ]),
 			load() {
 				var _this = this ;
@@ -73,7 +73,7 @@
 					"cityCode":""
 				}; 
 
-				this.$store.commit('GET_RACE_LIST',postData)
+				this.$store.dispatch('get_race_list',postData)
 				   
 			}
 		},
