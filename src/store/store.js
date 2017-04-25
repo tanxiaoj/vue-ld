@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import actions from './actions.js'
+import getters from './getters.js'
 import videolist from './modules/videolist'
 import teamlist from './modules/teamlist'
 import racelist from './modules/racelist'
@@ -29,6 +30,7 @@ export default new Vuex.Store({
 		topiclist
 	},
 	actions ,
+	getters ,
 	strict: true,
 	strict: process.env.NODE_ENV !== 'production'
 });
