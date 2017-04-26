@@ -57,10 +57,9 @@
 
     image[lazy=loading] {
       width: 3rem;
-      height: 300px;
+      height: 1.688rem;
       margin: auto;
       opacity: 0.5;
-      background-color: #000;
     }
 
     .topic{
@@ -74,6 +73,8 @@
             .headUrl{
                 width: 0.32rem;
                 height: 0.32rem;
+                border-radius: 50%;
+                overflow: hidden;
                 float: left;
                 display: inline-block;
                 img{

@@ -15,6 +15,9 @@ export default {
 	userUpdataCode :state => {
 		return state.storeUser.userUpdataCode 
 	},
+	videoList :state => {
+		return state.videolist.videoList
+	},
 	activeList : state => {
 
 		let list = state.activeUserlist.activeList ;

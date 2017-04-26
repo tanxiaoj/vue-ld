@@ -3,9 +3,10 @@ import myPage from './views/myPage.vue'
 import home from './views/home/home.vue'
 import teamList from './views/team/team-list.vue'
 import raceList from './views/race/race-list.vue'
-import video from './views/video/video.vue'
+import videoList from './views/video/video-list.vue'
 import zone from './views/zone/zone.vue'
 import addInfo from './views/addInfo.vue'
+import issue from './views/issue.vue'
 
 export default [
     {path:'/', component: home},
@@ -14,6 +15,7 @@ export default [
     {path:'/addInfo', component: addInfo},
     {path:'/teamList', component: teamList},
     {path:'/raceList', component: raceList},
-    {path:'/video', component: video},
-    {path:'/zone', component: zone}
+    {path:'/videoList', component: videoList},
+    {path:'/zone', component: zone},
+    {path:'/issue', component: issue}
 ]

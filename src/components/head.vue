@@ -1,7 +1,7 @@
 <template>
 	<div class="header">
         <div class="title">
-            <a href="javascript:;" @click="history"></a>
+            <a href="javascript:;" @click="history" v-show="showReturn"></a>
             <span>{{headName}}</span>
         </div>
 	</div>
@@ -13,7 +13,16 @@
         name : "header",
         props : {
             headName : {
-                type : String 
+                type : String ,
+                default() {
+                    return "" ;
+                }
+            },
+            showReturn :{
+                type :Boolean ,
+                default() {
+                    return true ;
+                }
             }
         },
         methods : {

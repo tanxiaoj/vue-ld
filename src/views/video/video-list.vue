@@ -1,15 +1,15 @@
 <template>
 	<div id="videoList">
 		<template v-for="list in lists">
-			<div>{{list.createDatetime}}</div>
+			<vid :video-detail="list"></vid>
 		</template>
 	</div>
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
+	import { mapActions,mapGetters } from 'vuex'
 	import * as type from '../../store/mutation-types.js'
-
+	import vid from '../../components/video.vue'
 	export default {
 		name :"videoList",
 		data () {
@@ -21,9 +21,9 @@
 			this.load()
 		},
 		computed :{
-			lists () {
-				return this.$store.state.videolist.videoList 
-			}
+			...mapGetters({
+				"lists" :"videoList"
+			})
 		},
 		methods : {
 			...mapActions([
@@ -36,6 +36,9 @@
 					cityCode : ""
 				})
 			}
+		},
+		components :{
+			vid
 		}
 	}
 </script>

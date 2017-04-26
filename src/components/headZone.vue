@@ -2,7 +2,7 @@
 	<div class="header">
         <div class="title">
             <i class="return" @click="history"></i>
-            <i class="publish"></i>
+            <i class="publish" @click="pubFn"></i>
             <ul class="tab">
                 <li :class="{active :selectType==0}" @click="tabFn(0,$event)">{{desc.introduce}}</li>
                 <li :class="{active :selectType==1}" @click="tabFn(1,$event)">{{desc.attend}}</li>
@@ -48,6 +48,9 @@
                 // }
                 this.selectType = type ;
                 this.$emit('select',type)
+            },
+            pubFn (){
+                this.$router.push('./issue')
             }
         }
 	}

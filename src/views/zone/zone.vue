@@ -19,8 +19,10 @@
 		</div>
 		<div class="topic">
 	        <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" @top-status-change="handleTopChange" @bottom-status-change="handleBottomChange" ref="loadmore">
-				<ul v-for="data in topicLists">
-					<topic :topic-data="data"></topic>
+				<ul>
+					<template v-for="data in topicLists">
+						<topic :topic-data="data"></topic>
+					</template>
 				</ul>
 			    <div slot="top" class="mint-loadmore-top">
 				    <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">刷新当前列表</span>
@@ -42,7 +44,7 @@
 	import { mapActions ,mapGetters} from 'vuex'
 	import { InfiniteScroll } from 'mint-ui'
 	import * as type from '../../store/mutation-types.js'
-	import { Loadmore,Lazyload } from 'mint-ui'
+	import { Loadmore } from 'mint-ui'
 
     const INTRODUCE = 0;
     const ATTEND = 1;
@@ -119,7 +121,6 @@
 			slide,
 			headTop,
 			topic ,
-			Lazyload,
 			"mt-loadmore" :Loadmore ,
 		}
 	}

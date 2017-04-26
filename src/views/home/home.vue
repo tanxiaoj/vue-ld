@@ -11,7 +11,7 @@
 		        	<router-link to="/raceList">赛事</router-link>
 		      	</li>
 		      	<li class="nav-item">
-		        	<router-link to="/video">视频</router-link>
+		        	<router-link to="/videoList">视频</router-link>
 		      	</li>
 		      	<li class="nav-item">
 		        	<router-link to="/zone">圈子</router-link>
