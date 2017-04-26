@@ -1,4 +1,4 @@
-import api from './api.js'
+import api from '../api/api.js'
 import * as type from './mutation-types.js'
 import axios from 'axios'
 

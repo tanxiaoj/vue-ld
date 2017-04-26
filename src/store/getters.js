@@ -1,6 +1,28 @@
 
 export default {
-	raceList (state){
+	raceList :state => {
 		return state.racelist.raceList
+	},
+	adList :state => {
+		return state.adSwipe.adList
+	},
+	zoneAdList :state => {
+		return state.adSwipe.zoneAdList
+	},
+	topicList :state => {
+		return state.topiclist.topicList
+	},
+	userUpdataCode :state => {
+		return state.storeUser.userUpdataCode 
+	},
+	activeList : state => {
+
+		let list = state.activeUserlist.activeList ;
+		
+		if(list.length > 4){
+			return list.slice(0,4)
+		}else {
+			return list
+		}
 	}
 }

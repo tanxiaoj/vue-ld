@@ -10,18 +10,7 @@ const mutations = {
 	}
 }
 
-const getters = {
-	activeList (state){
-		if(state.activeList.length > 4){
-			return state.activeList.slice(0,4)
-		}else {
-			return state.activeList
-		}
-	}
-}
-
 export default {
   state,
   mutations,
-  getters ,
 };

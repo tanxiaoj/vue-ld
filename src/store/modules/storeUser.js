@@ -10,15 +10,7 @@ const mutations = {
 	}
 }
 
-
-const getters = {
-	userUpdataCode (state){
-		return state.userUpdataCode 
-	}
-}
-
 export default {
 	state,
-	getters ,
 	mutations,
 };

@@ -15,17 +15,8 @@ const mutations = {
 }
 
 
-const getters = {
-	adList (state){
-		return state.adList
-	},
-	zoneAdList (state){
-		return state.zoneAdList
-	}
-}
 
 export default {
   state,
   mutations,
-  getters ,
 };

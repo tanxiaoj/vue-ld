@@ -12,14 +12,8 @@ const mutations = {
 	}
 }
 
-// const getters = {
-// 	raceList (state){
-// 		return state.raceList
-// 	}
-// }
 
 export default {
   state,
   mutations,
-  // getters ,
 };

@@ -1,4 +1,3 @@
-import api from '../api.js'
 import * as type from '../mutation-types.js'
 
 const state = {
@@ -16,14 +15,7 @@ const mutations = {
 	}
 }
 
-const getters = {
-	topicList (state){
-		return state.topicList
-	}
-}
-
 export default {
   state,
-  getters ,
   mutations,
 };
