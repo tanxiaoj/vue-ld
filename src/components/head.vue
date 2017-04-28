@@ -1,6 +1,6 @@
 <template>
 	<div class="header">
-        <div class="title">
+        <div class="title" :style="{backgroundColor:bgColor}">
             <a href="javascript:;" @click="history" v-show="showReturn"></a>
             <span>{{headName}}</span>
         </div>
@@ -22,6 +22,12 @@
                 type :Boolean ,
                 default() {
                     return true ;
+                }
+            },
+            bgColor :{
+                type :String,
+                default() {
+                    return "#e8ecf0"
                 }
             }
         },
@@ -46,7 +52,7 @@
     background-color: #fff;
     position: relative;
     text-align: center;
-    background-color: #e8ecf0;
+    // background-color: #e8ecf0;
     overflow: hidden;
 }
 .title a {
