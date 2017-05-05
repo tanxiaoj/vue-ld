@@ -12,5 +12,7 @@ export default {
     storeUser : host +"/appConsumer/updateCustomer",
     activeUserlist :host +"/appConsumer/selectActiveCustomer",
     topic_list :host +"/invitation/selectSplendidInvitations",
-    adCircleList :host +"/adManage/getCircleADList"
+    adCircleList :host +"/adManage/getCircleADList",
+    issueTopic : host +"/invitation/insertInvitation",
+    topName_list : host +"/topic/selectTopicNameList4App"
 }

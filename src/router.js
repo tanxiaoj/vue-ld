@@ -7,6 +7,7 @@ import videoList from './views/video/video-list.vue'
 import zone from './views/zone/zone.vue'
 import addInfo from './views/addInfo.vue'
 import issue from './views/issue.vue'
+import topicList from './views/topicList'
 
 export default [
     {path:'/', component: home},
@@ -17,5 +18,6 @@ export default [
     {path:'/raceList', component: raceList},
     {path:'/videoList', component: videoList},
     {path:'/zone', component: zone},
-    {path:'/issue', component: issue}
+    {path:'/issue', component: issue},
+    {path:'/topicList', component: topicList}
 ]

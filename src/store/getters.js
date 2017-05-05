@@ -27,5 +27,14 @@ export default {
 		}else {
 			return list
 		}
+	},
+	issueStatus : state => {
+		return state.issue.issueStatus ;
+	},
+	issueData : state => {
+		return state.issue.issueData ;
+	},
+	topNamelist : state => {
+		return state.topNamelist.topNamelist ;
 	}
 }

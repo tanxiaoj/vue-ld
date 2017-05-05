@@ -11,6 +11,8 @@ import loginout from './modules/loginout'
 import storeUser from './modules/storeUser'
 import activeUserlist from './modules/activeUserlist'
 import topiclist from './modules/topiclist'
+import issue from './modules/issue'
+import topNamelist from './modules/topNamelist'
 
 
 Vue.use(Vuex);
@@ -27,7 +29,9 @@ export default new Vuex.Store({
 		loginout ,
 		storeUser ,
 		activeUserlist ,
-		topiclist
+		topiclist,
+		issue ,
+		topNamelist
 	},
 	actions ,
 	getters ,

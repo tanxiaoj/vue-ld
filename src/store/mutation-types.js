@@ -8,3 +8,6 @@ export const LOGINOUT = 'LOGINOUT';
 export const STORE_USER_DATA = 'STORE_USER_DATA';
 export const ACTIVE_USER_LIST = 'ACTIVE_USER_LIST';
 export const GET_TOPIC_LIST = 'GET_TOPIC_LIST';
+export const ISSUE_TOPIC = "ISSUE_TOPIC";
+export const TOPNAME_LIST = "TOPNAME_LIST";
+export const ISSUE_TEMP_DATA = "ISSUE_TEMP_DATA";

@@ -7,9 +7,7 @@ let qs = require('qs');
 
 export default {
 	get_team_list ({commit} ,payload){
-		var postData = {"page": payload.page,"pageSize": payload.pageSize,"cityCode": payload.cityCode}; 
-	
-		axios.post(api.team_list, qs.stringify(postData))
+		axios.post(api.team_list, qs.stringify(payload))
 		.then(function (response) {
 		    console.log(response.data);
 		    var res = response.data ;
@@ -60,9 +58,8 @@ export default {
 		});				
 	},
 	active_user_list ( {commit} , data){
-		var postData = {"page": data.page,"pageSize": data.pageSize,"cityCode": data.cityCode}; 
-	
-		axios.post( api.activeUserlist, qs.stringify(postData))
+
+		axios.post( api.activeUserlist, qs.stringify(data))
 		.then(function (response) {
 		    console.log(response.data);
 		    var res = response.data ;
@@ -78,9 +75,8 @@ export default {
 		});				
 	},
 	get_topic_list ( {commit} ,data){
-		var postData = {"page": data.page,"pageSize": data.pageSize,"cityCode": data.cityCode}; 
 	
-		axios.post( api.topic_list, qs.stringify(postData))
+		axios.post( api.topic_list, qs.stringify(data))
 		.then(function (response) {
 		    console.log(response.data);
 		    var res = response.data ;
@@ -98,9 +94,7 @@ export default {
 		});				
 	},
 	get_video_list ( {commit} ,data){
-		var postData = {"page": data.page,"pageSize": data.pageSize,"cityCode": data.cityCode}; 
-	
-		axios.post( api.video_list, qs.stringify(postData))
+		axios.post( api.video_list, qs.stringify(data))
 		.then(function (response) {
 		    console.log(response.data);
 		    var res = response.data ;
@@ -115,10 +109,9 @@ export default {
 		    console.log(response);
 		});				
 	},
-	get_race_list ( {commit} ,data){
-		var postData = {"page": data.page,"pageSize": data.pageSize,"cityCode": data.cityCode}; 
-	
-		axios.post( api.race_list, qs.stringify(postData))
+	get_race_list ( {commit} ,data){ 
+
+		axios.post( api.race_list, qs.stringify(data))
 		.then(function (response) {
 		    console.log(response.data);
 		    var res = response.data ;
@@ -135,23 +128,9 @@ export default {
 		    console.log(response);
 		});				
 	},
-	store_user ( {commit} ,user){
-		var postData = {
-			userId :user.userId,
-			headIcon : user.headIcon,
-			telphone : user.telphone,
-			userName : user.userName,
-			realName : user.realName,
-			sex :user.sex,
-			age:user.age,
-			certCode:user.certCode,
-			height:user.height,
-			weight:user.weight,
-			sessionToken:user.sessionToken,
-			adeptPlace : user.adeptPlace,
-		}; 
+	store_user ( {commit} ,user){ 
 	
-		axios.post( api.storeUser, qs.stringify(postData))
+		axios.post( api.storeUser, qs.stringify(user))
 		.then(function (response) {
 		    console.log(response.data);
 		    var res = response.data ;
@@ -163,6 +142,40 @@ export default {
 		.catch(function (response) {
 		    console.log(response);
 		});				
+	},
+	issue_topic ( {commit} , data ){
+
+		axios.post( api.issueTopic, qs.stringify(data))
+		.then(function (response) {
+		    console.log(response.data);
+
+		    var res = response.data ;
+
+		    var status = res.retCode ;
+		   
+		    commit("ISSUE_TOPIC",status)
+            
+		})
+		.catch(function (response) {
+		    console.log(response);
+		});			
+	},
+	topName_list ( {commit} ,data){
+		axios.post( api.topName_list, qs.stringify(data))
+		.then(function (response) {
+		   	
+		   	var res = response.data ;
+		   	var	list = res.retContent ;
+
+		    commit("TOPNAME_LIST",list)
+            
+		})
+		.catch(function (response) {
+		    console.log(response);
+		});		
+	},
+	issue_temp_data ( {commit} ,data){
+		commit("ISSUE_TEMP_DATA",data)
 	}
 
 }
