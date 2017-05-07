@@ -1,5 +1,8 @@
 <template>
 	<div class="zone">
+
+	    <loading></loading>
+	    
 		<headTop :select-type="selectType" :desc="desc" @select="selectTab"></headTop>
 		<slide :ad-list="zoneAdLists" :swipe-data="swipeObj"></slide>
 		<!-- 活跃用户 -->
@@ -17,6 +20,7 @@
 			</ul>
 			<div class="more"></div>
 		</div>
+	
 		<div class="topic">
 	        <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" @top-status-change="handleTopChange" @bottom-status-change="handleBottomChange" ref="loadmore">
 				<ul>
@@ -34,6 +38,7 @@
 			    </div>	 
 			</mt-loadmore>
 		</div>
+
 	</div>
 </template>
 
@@ -45,6 +50,7 @@
 	import { InfiniteScroll } from 'mint-ui'
 	import * as type from '../../store/mutation-types.js'
 	import { Loadmore } from 'mint-ui'
+	import loading from '../../components/loading.vue'
 
     const INTRODUCE = 0;
     const ATTEND = 1;
@@ -68,7 +74,7 @@
 				userId :this.$store.getters.loginMes.userData.userId
 			}
 		},
-		mounted (){
+		created (){
 			this.load()
 		},
 		computed : mapGetters({
@@ -112,6 +118,7 @@
 					pageSize:2 ,
 					userId :this.userId
 				})
+		        
 			},
 			selectTab(type){
 				this.selectType = type ;
@@ -121,6 +128,7 @@
 			slide,
 			headTop,
 			topic ,
+			loading ,
 			"mt-loadmore" :Loadmore ,
 		}
 	}
