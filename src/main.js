@@ -32,6 +32,26 @@ const router = new VueRouter({
   routes : routerConfig
 })
 
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    console.log(sessionStorage.getItem('loginMes'))
+    if (!sessionStorage.getItem('loginMes')) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // 确保一定要调用 next()
+  }
+})
+
+
 new Vue({
   el:'#app',
   router,

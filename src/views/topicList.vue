@@ -1,20 +1,27 @@
 <template>
     <div class="topicList">
-        <headTop :head-name="headName" :bg-color="bgColor" :show-return="showReturn"></headTop>
-        <div class="cancel" @click="toIssue(0)">取消</div>
-        <input type="text" placeholder="输入您想搜索的话题标签" class="glass" v-model="seachVal">
-        <div class="line"></div>
-        <ul class="contain">
-            <template v-for="(data,index) in list">
-                <li @click="toIssue(1,index)" ref="topVal">{{data.topicName}}</li>
-            </template>
-        </ul>
+        <div class="loading" v-if="loading">
+            <loading></loading>
+        </div>
+        <div v-if="showContent">
+            <headTop :head-name="headName" :bg-color="bgColor" :show-return="showReturn"></headTop>
+            <div class="cancel" @click="toIssue(0)">取消</div>
+            <input type="text" placeholder="输入您想搜索的话题标签" class="glass" v-model="seachVal">
+            <div class="line"></div>
+            <ul class="contain">
+                <template v-for="(data,index) in list">
+                    <li @click="toIssue(1,index)" ref="topVal">{{data.topicName}}</li>
+                </template>
+            </ul>
+        </div>
     </div>
 </template>
 
 <script>
     import { mapActions ,mapGetters } from 'vuex'
     import headTop from '../components/head.vue'
+    import loading from '../components/loading.vue'
+
     export default {
         name :"topicList",
         data (){
@@ -22,7 +29,9 @@
                 headName : "话题搜索",
                 bgColor : "#fff" ,
                 showReturn :false,
-                seachVal :""
+                seachVal :"",
+                loading :false ,
+                showContent : false
             }
         },
         mounted (){
@@ -34,8 +43,15 @@
             })
         },
         watch :{
+            '$route': 'load',
             seachVal (val){
                 this.load();
+            },
+            list (val,oldVal){
+                if(val && val!=""){
+                    this.loading = false ;
+                    this.showContent = true;  
+                }
             }
         },
         methods :{
@@ -46,6 +62,10 @@
                     page :1,
                     rows :99
                 }
+
+                this.showContent = false;
+                this.loading = true ;
+
                 this.$store.dispatch("topName_list",data)
             },
             toIssue (type,index){
@@ -65,7 +85,8 @@
             }
         },
         components :{
-            headTop
+            headTop,
+            loading
         }
     }
 </script>

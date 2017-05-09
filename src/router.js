@@ -18,6 +18,14 @@ export default [
     {path:'/raceList', component: raceList},
     {path:'/videoList', component: videoList},
     {path:'/zone', component: zone},
-    {path:'/issue', component: issue},
-    {path:'/topicList', component: topicList}
+	{
+		path :'/issue',
+		component :issue ,
+		meta: { requiresAuth: true }
+	},
+    {
+    	path:'/topicList', 
+    	component: topicList,
+    	meta: { requiresAuth: true }
+    }
 ]

@@ -1,44 +1,46 @@
 <template>
 	<div class="zone">
+		<div class="loading" v-if="loading">
+			<loading></loading>
+	    </div>
+	    <div v-if="showContent" class="content">
 
-	    <loading></loading>
-	    
-		<headTop :select-type="selectType" :desc="desc" @select="selectTab"></headTop>
-		<slide :ad-list="zoneAdLists" :swipe-data="swipeObj"></slide>
-		<!-- 活跃用户 -->
-		<div class="active_user">
-			<div class="title">活跃用户</div>
-			<ul class="list">
-				<template v-for="list in activeLists">
-					<li>
-						<div class="img">
-							<img :src="list.headIcon" alt="">
-						</div>
-						<h4>{{list.userName}}</h4>
-					</li>
-				</template>
-			</ul>
-			<div class="more"></div>
-		</div>
-	
-		<div class="topic">
-	        <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" @top-status-change="handleTopChange" @bottom-status-change="handleBottomChange" ref="loadmore">
-				<ul>
-					<template v-for="data in topicLists">
-						<topic :topic-data="data"></topic>
+			<headTop :select-type="selectType" :history-url="historyUrl" :desc="desc" @select="selectTab"></headTop>
+			<slide :ad-list="zoneAdLists" :swipe-data="swipeObj"></slide>
+			<!-- 活跃用户 -->
+			<div class="active_user">
+				<div class="title">活跃用户</div>
+				<ul class="list">
+					<template v-for="list in activeLists">
+						<li>
+							<div class="img">
+								<img :src="list.headIcon" alt="">
+							</div>
+							<h4>{{list.userName}}</h4>
+						</li>
 					</template>
 				</ul>
-			    <div slot="top" class="mint-loadmore-top">
-				    <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">刷新当前列表</span>
-				    <span v-show="topStatus === 'loading'">Loading...</span>
-			    </div>	      
-			    <div slot="bottom" class="mint-loadmore-bottom">
-				    <span v-show="bottomStatus !== 'loading'" :class="{ 'rotate': bottomStatus === 'drop' }">数据加载中...</span>
-				    <span v-show="bottomStatus === 'loading'">Loading...</span>
-			    </div>	 
-			</mt-loadmore>
-		</div>
+				<div class="more"></div>
+			</div>
+			<div class="topic">
+		        <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" @top-status-change="handleTopChange" @bottom-status-change="handleBottomChange" ref="loadmore">
+					<ul>
+						<template v-for="data in topicLists">
+							<topic :topic-data="data"></topic>
+						</template>
+					</ul>
+				    <div slot="top" class="mint-loadmore-top">
+					    <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">刷新当前列表</span>
+					    <span v-show="topStatus === 'loading'">Loading...</span>
+				    </div>	      
+				    <div slot="bottom" class="mint-loadmore-bottom">
+					    <span v-show="bottomStatus !== 'loading'" :class="{ 'rotate': bottomStatus === 'drop' }">数据加载中...</span>
+					    <span v-show="bottomStatus === 'loading'">Loading...</span>
+				    </div>	 
+				</mt-loadmore>
+			</div>
 
+		</div>
 	</div>
 </template>
 
@@ -47,9 +49,8 @@
 	import headTop from '../../components/headZone.vue'
 	import topic from '../../components/topic.vue'
 	import { mapActions ,mapGetters} from 'vuex'
-	import { InfiniteScroll } from 'mint-ui'
+	import { InfiniteScroll ,Loadmore} from 'mint-ui'
 	import * as type from '../../store/mutation-types.js'
-	import { Loadmore } from 'mint-ui'
 	import loading from '../../components/loading.vue'
 
     const INTRODUCE = 0;
@@ -68,13 +69,17 @@
 					introduce : "推荐",
 					attend : "关注"
 				},
+				historyUrl :'./',
 				page : 0,
 				topStatus : "",
 				bottomStatus : "" ,
-				userId :this.$store.getters.loginMes.userData.userId
+				userId :this.$store.getters.loginMes=="未登录"?"":this.$store.getters.loginMes.userData.userId,
+				loading: false,
+				showContent : false ,
+				dataStatus :[]  // 存储接口请求状态
 			}
 		},
-		created (){
+		mounted (){
 			this.load()
 		},
 		computed : mapGetters({
@@ -82,6 +87,37 @@
 			activeLists : "activeList",
 			topicLists : "topicList"
 		}),
+		watch: {
+		    // 如果路由有变化，会再次执行该方法
+		    '$route': 'load' ,
+		    zoneAdLists (val,oldVal){
+		    	if(val && val !=""){
+		    		this.dataStatus.push(true)
+		    	}
+		    },
+		    activeLists (val,oldVal){
+		    	if(val && val !=""){
+		    		this.dataStatus.push(true)
+		    	}
+		    },
+		    topicLists (val,oldVal){
+		    	if(val && val !=""){
+		    		this.dataStatus.push(true)
+		    	}
+		    },
+		    dataStatus (val,oldVal) {
+		    	var _this = this ;
+				_this.loading = false ;
+				_this.showContent = true;
+
+		    	val.map(function(v, i) {
+		    		if(!v){
+						_this.loading = true ;
+						_this.showContent = false;		    			
+		    		}
+		    	})
+		    }
+		},
 		methods :{
 			...mapActions([
 				["get_zoneAd_list"],
@@ -109,7 +145,10 @@
 
 				_this.page ++ ;
 
-				this.$store.dispatch("get_zoneAd_list")
+		        this.showContent = false;
+		        this.loading = true ;
+
+				this.$store.dispatch("get_zoneAd_list") ;
 				this.$store.dispatch("active_user_list",{
 					userId :this.userId
 				})
@@ -118,7 +157,6 @@
 					pageSize:2 ,
 					userId :this.userId
 				})
-		        
 			},
 			selectTab(type){
 				this.selectType = type ;
@@ -128,7 +166,7 @@
 			slide,
 			headTop,
 			topic ,
-			loading ,
+			loading,
 			"mt-loadmore" :Loadmore ,
 		}
 	}

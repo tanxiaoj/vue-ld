@@ -1,21 +1,26 @@
 <template>
 	<div class="race-list">
-		<headTop :head-name="headName"></headTop>
+        <div class="loading" v-if="loading">
+            <loading></loading>
+        </div>
 
-	    <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" @top-status-change="handleTopChange" @bottom-status-change="handleBottomChange" ref="loadmore">
-			<template v-for="list in lists">
-				<race :list="list"></race>
-			</template>
-		    <div slot="top" class="mint-loadmore-top">
-			    <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
-			    <span v-show="topStatus === 'loading'">Loading...</span>
-		    </div>	      
-		    <div slot="bottom" class="mint-loadmore-bottom">
-			    <span v-show="bottomStatus !== 'loading'" :class="{ 'rotate': bottomStatus === 'drop' }">↑</span>
-			    <span v-show="bottomStatus === 'loading'">Loading...</span>
-		    </div>	  
-        </mt-loadmore>
+        <div v-if="showContent">
+			<headTop :head-name="headName"></headTop>
 
+		    <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" @top-status-change="handleTopChange" @bottom-status-change="handleBottomChange" ref="loadmore">
+				<template v-for="list in lists">
+					<race :list="list"></race>
+				</template>
+			    <div slot="top" class="mint-loadmore-top">
+				    <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
+				    <span v-show="topStatus === 'loading'">Loading...</span>
+			    </div>	      
+			    <div slot="bottom" class="mint-loadmore-bottom">
+				    <span v-show="bottomStatus !== 'loading'" :class="{ 'rotate': bottomStatus === 'drop' }">↑</span>
+				    <span v-show="bottomStatus === 'loading'">Loading...</span>
+			    </div>	  
+	        </mt-loadmore>
+		</div>
 	</div>
 </template>
 
@@ -24,6 +29,7 @@
 	import * as type from '../../store/mutation-types.js'
 	import race from '../../components/race.vue'
 	import headTop from '../../components/head.vue'
+	import loading from '../../components/loading.vue'
 	import { Loadmore } from 'mint-ui'
 	export default {
 		name : "raceList",
@@ -33,7 +39,9 @@
 				page : 0,
 				pageSize : 9,
 				topStatus : "",
-				bottomStatus : ""
+				bottomStatus : "",
+                loading :false ,
+                showContent : false
 			}
 		},
 		created(){
@@ -42,6 +50,15 @@
 		computed : mapGetters({
 			lists : "raceList"
 		}),
+		watch :{
+            '$route': 'load',
+            lists (val,oldVal){
+                if(val && val!=""){
+                    this.loading = false ;
+                    this.showContent = true;  
+                }
+            }			
+		},
 		methods : {
 			loadBottom() {
 			  // ...// load more data
@@ -67,6 +84,9 @@
 
 				_this.page ++ ;
 
+                this.showContent = false;
+                this.loading = true ;
+
 				var postData = {
 					"page": _this.page,
 					"pageSize": _this.pageSize,
@@ -80,6 +100,7 @@
 		components : {
 			race,
 			headTop ,
+			loading ,
 			"mt-loadmore" :Loadmore
 		}
 	}

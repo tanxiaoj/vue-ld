@@ -1,5 +1,5 @@
 <template>
-	<div class="loading" v-if="loading">
+	<div class="loading">
     
 	</div>
 </template>
@@ -10,7 +10,7 @@
 		name : "loading",
 		data (){
 			return {
-                loading: false
+                // loading: false
 			}
 		},
 		mounted (){

@@ -1,30 +1,36 @@
 <template>
 	<div class="team-list">
-        <headTop :head-name="headName"></headTop>
-        <div class="creatTeam" href="javascript:;">创建球队</div>
-        <div class="team-seach">
-            <a href="javascript:;">
-                <input type="text" placeholder="搜索球队">
-            </a>
+        <div class="loading" v-if="loading">
+            <loading></loading>
         </div>
 
-        <div id="content">      
-	        <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" @top-status-change="handleTopChange" @bottom-status-change="handleBottomChange" ref="loadmore">
-	            <ul class="teamList" id="add">
-		            <template v-for="list in lists">
-		                <li><a href="javascript:;"><img :src="list.teamLogoUrl"><span>{{list.teamFullname}}</span><i>{{list.playerCount}}人</i></a></li>
-		            </template>
-	            </ul>
-			    <div slot="top" class="mint-loadmore-top">
-				    <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
-				    <span v-show="topStatus === 'loading'">Loading...</span>
-			    </div>	      
-			    <div slot="bottom" class="mint-loadmore-bottom">
-				    <span v-show="bottomStatus !== 'loading'" :class="{ 'rotate': bottomStatus === 'drop' }">↑</span>
-				    <span v-show="bottomStatus === 'loading'">Loading...</span>
-			    </div>	  
-	        </mt-loadmore>
-        </div>  
+        <div v-if="showContent">
+            <headTop :head-name="headName"></headTop>
+            <div class="creatTeam" href="javascript:;">创建球队</div>
+            <div class="team-seach">
+                <a href="javascript:;">
+                    <input type="text" placeholder="搜索球队">
+                </a>
+            </div>
+
+            <div id="content">      
+    	        <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" @top-status-change="handleTopChange" @bottom-status-change="handleBottomChange" ref="loadmore">
+    	            <ul class="teamList" id="add">
+    		            <template v-for="list in lists">
+    		                <li><a href="javascript:;"><img :src="list.teamLogoUrl"><span>{{list.teamFullname}}</span><i>{{list.playerCount}}人</i></a></li>
+    		            </template>
+    	            </ul>
+    			    <div slot="top" class="mint-loadmore-top">
+    				    <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
+    				    <span v-show="topStatus === 'loading'">Loading...</span>
+    			    </div>	      
+    			    <div slot="bottom" class="mint-loadmore-bottom">
+    				    <span v-show="bottomStatus !== 'loading'" :class="{ 'rotate': bottomStatus === 'drop' }">↑</span>
+    				    <span v-show="bottomStatus === 'loading'">Loading...</span>
+    			    </div>	  
+    	        </mt-loadmore>
+            </div>  
+        </div>
 	</div>
 </template>
 
@@ -33,6 +39,7 @@
 	import * as type from '../../store/mutation-types.js'
 	import { Loadmore } from 'mint-ui'
     import headTop from '../../components/head.vue'
+    import loading from '../../components/loading.vue'
 
 	export default {
 		name : 'teamList',
@@ -42,7 +49,9 @@
 				page : 0,
 				pageSize : 8,
 				topStatus : "",
-				bottomStatus : ""
+				bottomStatus : "",
+                loading :false ,
+                showContent : false
 			}
 		},
 		mounted(){
@@ -53,6 +62,15 @@
 				return this.$store.state.teamlist.teamList
 			}
 		},
+        watch :{
+            '$route': 'load',
+            lists (val,oldVal){
+                if(val && val!=""){
+                    this.loading = false ;
+                    this.showContent = true;  
+                }
+            }           
+        },
 		methods : {
 			...mapActions([
 				["get_team_list"]
@@ -78,6 +96,9 @@
 
 				_this.page ++ ;
 
+                this.showContent = false;
+                this.loading = true ;
+
 				var postData = {
 					"page": _this.page,
 					"pageSize": _this.pageSize,
@@ -88,6 +109,7 @@
 		},
 		components : {
 			"mt-loadmore" :Loadmore ,
+            loading ,
             headTop
 		}
 	}

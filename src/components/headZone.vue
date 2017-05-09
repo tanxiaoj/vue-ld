@@ -35,11 +35,17 @@
                         attend : "关注"
                     }
                 }
+            },
+            historyUrl: {
+                type :String,
+                default() {
+                    return "-1"
+                }
             }
         },
         methods : {
             history (){
-                this.$router.go(-1);
+                this.$router.push(this.historyUrl);
             },
             tabFn (type,event){
                 // console.log(event)

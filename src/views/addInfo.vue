@@ -74,12 +74,12 @@
                 val : "" ,
                 infoData :this.$store.getters.loginMes.userData ,
                 info : {
-                    headIcon :this.$store.getters.loginMes.userData.headIcon?this.$store.getters.loginMes.userData.headIcon:"",
-                    name : this.$store.getters.loginMes.userData.userName?this.$store.getters.loginMes.userData.userName:"",
+                    headIcon :this.$store.getters.loginMes=="未登录"?"":this.$store.getters.loginMes.userData.headIcon,
+                    name : this.$store.getters.loginMes=="未登录"?"":this.$store.getters.loginMes.userData.userName,
                     realName : "",
                     cdCard : "",
-                    phoneNumber:this.$store.getters.loginMes.userData.telphone?this.$store.getters.loginMes.userData.telphone:"",
-                    bdNumber : this.$store.getters.loginMes.userData.telphone?this.$store.getters.loginMes.userData.telphone:"",
+                    phoneNumber:this.$store.getters.loginMes=="未登录"?"":this.$store.getters.loginMes.userData.telphone,
+                    bdNumber : this.$store.getters.loginMes=="未登录"?"":this.$store.getters.loginMes.userData.telphone,
                 },
                 selectVal :{
                     sexFlag : "未设置",
@@ -124,14 +124,14 @@
                 if(this.flag.ageFlag == "ageFlag"){
                     return this.selectVal.ageFlag
                 }else {
-                    return this.infoData.age?this.infoData.age:""
+                    return this.infoData?this.infoData.age:""
                 }
             },
             getHeight (){
                 if(this.flag.heightFlag == "heightFlag"){
                     return this.selectVal.heightFlag
                 }else {
-                    return this.infoData.height?this.infoData.height:""
+                    return this.infoData?this.infoData.height:""
                 }
             },
             getWeight (){
