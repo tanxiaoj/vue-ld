@@ -13,7 +13,11 @@ export default [
     {path:'/', component: home},
     {path:'/login', component: login},
     {path:'/myPage', component: myPage},
-    {path:'/addInfo', component: addInfo},
+    {
+    	path:'/addInfo', 
+    	component: addInfo,
+    	meta: { requiresAuth: true }
+	},
     {path:'/teamList', component: teamList},
     {path:'/raceList', component: raceList},
     {path:'/videoList', component: videoList},

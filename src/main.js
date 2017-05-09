@@ -11,6 +11,7 @@ import 'mint-ui/lib/style.css'
 import 'common/stylus/index.styl'
 import VueLazyload from 'vue-lazyload'
 
+import { Toast } from 'mint-ui'
 import loadImg from 'assets/images/loading.gif'
 
 Vue.use(VueRouter)
@@ -37,12 +38,18 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
-    console.log(sessionStorage.getItem('loginMes'))
     if (!sessionStorage.getItem('loginMes')) {
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath }
-      })
+      Toast({
+        message: '您暂未登陆账号',
+        position: 'bottom',
+        duration: 2000
+      });
+      setTimeout( () => {
+        next({
+          path: '/login',
+          query: { redirect: to.fullPath }
+        })
+      }, 2000)
     } else {
       next()
     }
